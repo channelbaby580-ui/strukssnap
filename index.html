@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SnapLedger - Pencatatan Keuangan Instan</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e0e3e5",
+                        "tertiary-fixed-dim": "#b7c9d5",
+                        "on-tertiary-fixed-variant": "#384953",
+                        "surface-container-high": "#e6e8ea",
+                        "on-background": "#191c1e",
+                        "tertiary-container": "#afc1cc",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-container": "#6cf8bb",
+                        "on-primary-fixed": "#00201c",
+                        "on-primary-fixed-variant": "#005047",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#d3e5f1",
+                        "primary-fixed": "#62fae3",
+                        "surface-dim": "#d8dadc",
+                        "surface": "#f7f9fb",
+                        "background": "#f7f9fb",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#2dd4bf",
+                        "on-surface-variant": "#3c4a46",
+                        "inverse-primary": "#3cddc7",
+                        "on-surface": "#191c1e",
+                        "on-error-container": "#93000a",
+                        "primary": "#006b5f",
+                        "surface-tint": "#006b5f",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "inverse-on-surface": "#eff1f3",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#bacac5",
+                        "surface-bright": "#f7f9fb",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary-container": "#3f4f59",
+                        "secondary-fixed": "#6ffbbe",
+                        "secondary": "#006c49",
+                        "on-tertiary-fixed": "#0c1e26",
+                        "on-primary-container": "#00574d",
+                        "primary-fixed-dim": "#3cddc7",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-secondary-fixed": "#002113",
+                        "outline": "#6b7a76",
+                        "tertiary": "#50616b",
+                        "surface-container": "#eceef0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "40px",
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "base": "8px",
+                        "stack-sm": "12px",
+                        "stack-md": "20px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Nunito Sans"],
+                        "headline-md": ["Nunito Sans"],
+                        "display-lg-mobile": ["Nunito Sans"],
+                        "body-lg": ["Nunito Sans"],
+                        "label-md": ["Nunito Sans"],
+                        "headline-sm": ["Nunito Sans"],
+                        "display-lg": ["Nunito Sans"],
+                        "label-sm": ["Nunito Sans"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-shadow {
+            box-shadow: 0 10px 40px -10px rgba(0, 107, 95, 0.08);
+        }
+        .active-press {
+            transition: transform 0.1s ease;
+        }
+        .active-press:active {
+            transform: scale(0.96);
+        }
+        .gradient-mesh {
+            background-color: #f7f9fb;
+            background-image:
+                radial-gradient(at 0% 0%, hsla(170, 65%, 93%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, hsla(180, 50%, 95%, 1) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen gradient-mesh">
+<!-- ======================================================================
+     KONFIGURASI — ISI 1 BARIS INI SAJA
+     Tempel URL Production webhook n8n kamu di antara tanda kutip.
+     Contoh: "https://n8n.tangguhriyadi.com/webhook/snapstruk/submit"
+     ====================================================================== -->
+<script>
+        const WEBHOOK_URL = "https://n8n.tangguhriyadi.com/webhook/snapstruk/submit";
+</script>
+
+<header class="w-full pt-stack-md flex flex-col items-center justify-center px-container-padding pb-base">
+<div class="flex flex-col items-center gap-base">
+<div class="w-24 h-24 mb-base transition-transform duration-500 hover:rotate-3">
+<img alt="Maskot SnapLedger" class="w-full h-full object-contain" src="logo.png"/>
+</div>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary tracking-tight">SnapLedger</h1>
+<p class="text-on-surface-variant font-body-md text-body-md -mt-2">Catat pengeluaran semudah berfoto</p>
+</div>
+</header>
+<main class="flex justify-center px-gutter py-section-gap">
+<div class="w-full max-w-[500px] bg-surface-container-lowest rounded-xl p-container-padding soft-shadow flex flex-col gap-section-gap relative overflow-hidden border border-white/40">
+<!-- Bagian Kamera -->
+<section class="flex flex-col gap-stack-md">
+<div class="relative group" id="photo-preview-container">
+<div class="aspect-[4/3] w-full bg-surface-container-low rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-outline-variant transition-all hover:border-primary/50 group-hover:bg-surface-container overflow-hidden">
+<div class="flex flex-col items-center gap-base text-on-surface-variant" id="placeholder-content">
+<span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'wght' 200;">image</span>
+<span class="font-label-md text-label-md">Belum ada foto terpilih</span>
+</div>
+<img alt="" class="hidden w-full h-full object-cover" id="image-display" src=""/>
+<button class="hidden absolute top-4 right-4 bg-error/90 text-on-error p-2 rounded-full active-press shadow-lg" id="remove-photo">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<button class="w-full h-16 bg-secondary-container text-on-secondary-container rounded-lg flex items-center justify-center gap-base font-headline-sm text-headline-sm active-press transition-colors hover:bg-secondary-fixed shadow-sm" id="camera-btn">
+<span class="material-symbols-outlined text-3xl">photo_camera</span>
+                    Ambil Foto
+                </button>
+<input accept="image/*" capture="environment" class="hidden" id="camera-input" type="file"/>
+</section>
+<!-- Bagian Keterangan -->
+<section class="flex flex-col gap-stack-md">
+<div class="flex flex-col gap-base">
+<label class="font-label-md text-label-md text-primary px-1" for="keterangan">Keterangan</label>
+<div class="relative">
+<textarea class="w-full bg-surface-container-low border-2 border-transparent focus:border-primary focus:ring-0 rounded-lg p-stack-md font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 transition-all resize-none" id="keterangan" placeholder="Contoh: Makan siang nasi padang..." rows="3"></textarea>
+</div>
+</div>
+<div class="flex flex-wrap gap-base">
+<span class="px-4 py-1.5 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full font-label-sm text-label-sm cursor-pointer hover:bg-tertiary-container transition-colors">Makanan</span>
+<span class="px-4 py-1.5 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full font-label-sm text-label-sm cursor-pointer hover:bg-tertiary-container transition-colors">Transportasi</span>
+<span class="px-4 py-1.5 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full font-label-sm text-label-sm cursor-pointer hover:bg-tertiary-container transition-colors">Pribadi</span>
+</div>
+</section>
+<!-- Tombol Simpan -->
+<footer class="pt-base">
+<button class="w-full h-16 bg-primary-container text-on-primary-container rounded-lg flex items-center justify-center gap-base font-headline-sm text-headline-sm active-press hover:bg-primary shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all" id="save-btn">
+<span class="material-symbols-outlined">save</span>
+                    Simpan
+                </button>
+<p class="text-center text-on-surface-variant font-label-sm text-label-sm mt-stack-md opacity-60" id="hint-text">
+                    SnapLedger secara otomatis mengekstrak data dari struk Anda.
+                </p>
+</footer>
+<div class="absolute -top-12 -left-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-12 -right-12 w-32 h-32 bg-secondary/5 rounded-full blur-3xl pointer-events-none"></div>
+</div>
+</main>
+<!-- Toast -->
+<div class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-container-padding py-stack-md rounded-full font-label-md text-label-md flex items-center gap-base shadow-2xl opacity-0 translate-y-10 transition-all duration-300 pointer-events-none z-50" id="toast">
+<span class="material-symbols-outlined text-secondary-fixed" id="toast-icon">check_circle</span>
+<span id="toast-text">Struk berhasil diupload!</span>
+</div>
+<script>
+        const cameraBtn = document.getElementById('camera-btn');
+        const cameraInput = document.getElementById('camera-input');
+        const imageDisplay = document.getElementById('image-display');
+        const placeholderContent = document.getElementById('placeholder-content');
+        const removePhotoBtn = document.getElementById('remove-photo');
+        const saveBtn = document.getElementById('save-btn');
+        const keteranganInput = document.getElementById('keterangan');
+        const toast = document.getElementById('toast');
+        const toastText = document.getElementById('toast-text');
+        const toastIcon = document.getElementById('toast-icon');
+
+        // Foto terkompres siap kirim (base64 dataURL). null = belum ada foto.
+        let compressedDataUrl = null;
+
+        // --- Kompresi foto di HP sebelum dikirim (hemat token & kuota) ---
+        // Sisi terpanjang dipotong ke 1280px, kualitas JPEG 0.65. Struk tetap terbaca.
+        function compressImage(file, maxEdge = 1280, quality = 0.65) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let { width, height } = img;
+                        if (width > height && width > maxEdge) {
+                            height = Math.round(height * maxEdge / width);
+                            width = maxEdge;
+                        } else if (height >= width && height > maxEdge) {
+                            width = Math.round(width * maxEdge / height);
+                            height = maxEdge;
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                    img.onerror = () => reject(new Error('Gagal membaca gambar'));
+                    img.src = e.target.result;
+                };
+                reader.onerror = () => reject(new Error('Gagal membaca file'));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        cameraBtn.addEventListener('click', () => cameraInput.click());
+
+        cameraInput.addEventListener('change', async function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            try {
+                compressedDataUrl = await compressImage(file);
+                imageDisplay.src = compressedDataUrl;
+                imageDisplay.classList.remove('hidden');
+                placeholderContent.classList.add('hidden');
+                removePhotoBtn.classList.remove('hidden');
+            } catch (err) {
+                alert('Foto gagal diproses, coba ambil ulang.');
+            }
+        });
+
+        removePhotoBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            compressedDataUrl = null;
+            imageDisplay.src = '';
+            imageDisplay.classList.add('hidden');
+            placeholderContent.classList.remove('hidden');
+            removePhotoBtn.classList.add('hidden');
+            cameraInput.value = '';
+        });
+
+        // Chip menambah teks ke keterangan
+        document.querySelectorAll('.flex.flex-wrap.gap-base span').forEach(chip => {
+            chip.addEventListener('click', () => {
+                keteranganInput.value += (keteranganInput.value ? ' ' : '') + chip.innerText;
+                keteranganInput.focus();
+            });
+        });
+
+        function showToast(message, ok = true) {
+            toastText.innerText = message;
+            toastIcon.innerText = ok ? 'check_circle' : 'error';
+            toastIcon.className = 'material-symbols-outlined ' + (ok ? 'text-secondary-fixed' : 'text-error-container');
+            toast.classList.remove('opacity-0', 'translate-y-10');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 2500);
+        }
+
+        function setSaving(isSaving) {
+            saveBtn.disabled = isSaving;
+            saveBtn.innerHTML = isSaving
+                ? '<span class="material-symbols-outlined animate-spin">sync</span> Mengirim...'
+                : '<span class="material-symbols-outlined">save</span> Simpan';
+        }
+
+        // --- Simpan: KIRIM ASLI ke webhook n8n ---
+        saveBtn.addEventListener('click', async () => {
+            if (!compressedDataUrl) {
+                alert('Ambil foto struk dulu.');
+                return;
+            }
+            if (!WEBHOOK_URL || WEBHOOK_URL.includes('PASTE_URL')) {
+                alert('WEBHOOK_URL belum diisi di bagian atas file index.html.');
+                return;
+            }
+
+            setSaving(true);
+
+            // Buang prefix "data:image/jpeg;base64," -> sisakan base64 murni untuk Gemini
+            const base64 = compressedDataUrl.split(',')[1];
+
+            const payload = {
+                image: base64,
+                mimeType: 'image/jpeg',
+                note: keteranganInput.value.trim(),
+                submittedAt: new Date().toISOString()
+            };
+
+            try {
+                const res = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) throw new Error('Server membalas ' + res.status);
+
+                // Sukses NYATA: baru reset form
+                showToast('Struk berhasil diupload!', true);
+                keteranganInput.value = '';
+                removePhotoBtn.click();
+            } catch (err) {
+                showToast('Gagal kirim: ' + err.message, false);
+            } finally {
+                setSaving(false);
+            }
+        });
+
+        keteranganInput.addEventListener('focus', () => {
+            keteranganInput.parentElement.parentElement.classList.add('scale-[1.01]');
+        });
+        keteranganInput.addEventListener('blur', () => {
+            keteranganInput.parentElement.parentElement.classList.remove('scale-[1.01]');
+        });
+    </script>
+</body></html>
